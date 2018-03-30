@@ -1,6 +1,6 @@
 <?php
 //load the database configuration file
-include 'dbConfig.php';
+include 'db/dbConfig.php';
 
 if(!empty($_GET['status'])){
   switch($_GET['status']){
@@ -44,7 +44,7 @@ if(!empty($_GET['status'])){
         Trucks
       </div>
       <div class="panel-body">
-        <form action="importData.php" method="post" enctype="multipart/form-data" id="importFrm" style="margin-bottom: 20px;">
+        <form action="db/importData.php" method="post" enctype="multipart/form-data" id="importFrm" style="margin-bottom: 20px;">
           <div class="row">
             <div class="col-sm-6">
               <label for="file">CSV file</label>
@@ -74,25 +74,68 @@ if(!empty($_GET['status'])){
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Created</th>
-              <th>Status</th>
+              <th>Year</th>
+              <th>Cab</th>
+              <th>Engine</th>
+              <th>Wheel Base</th>
+              <th>Drive Train</th>
+              <th>FGAWR</th>
+              <th>GVWR</th>
+              <th>Rear Wheel</th>
+              <th>Bed</th>
+              <th>Trim Pkg</th>
+              <th>Headlamp</th>
+              <th>Plow Model</th>
+              <th>Subframe</th>
+              <th>Mount Kit</th>
+              <th>Center Member</th>
+              <th>Note 1</th>
+              <!-- <th>Note 2</th> -->
+              <!-- <th>Note 3</th>
+              <th>Note 4</th>
+              <th>Note 5</th>
+              <th>Note 6</th>
+              <th>Note 7</th>
+              <th>Note 8</th>
+              <th>Note 9</th>
+              <th>Note 10</th> -->
             </tr>
           </thead>
           <tbody>
           <?php
-            //get records from database
+            // get records from database
             $query = $conn->query("SELECT * FROM TRUCKS ORDER BY id DESC");
             if ($query->num_rows > 0) {
               while($row = $query->fetch_assoc()){ ?>
                 <tr>
-                  <td><?php echo $row['name']; ?></td>
-                  <td><?php echo $row['email']; ?></td>
-                  <td><?php echo $row['phone']; ?></td>
-                  <td><?php echo $row['created']; ?></td>
-                  <td><?php echo ($row['status'] == '1') ? 'Active' : 'Inactive'; ?></td>
+                  <td><?php echo $row['year']; ?></td>
+                  <td><?php echo $row['cab']; ?></td>
+                  <td><?php echo $row['engine']; ?></td>
+                  <td><?php echo $row['wheel_base']; ?></td>
+                  <td><?php echo $row['drive_train']; ?></td>
+                  <td><?php echo $row['fgawr']; ?></td>
+                  <td><?php echo $row['gvwr']; ?></td>
+                  <td><?php echo $row['rear_wheel']; ?></td>
+                  <td><?php echo $row['bed']; ?></td>
+                  <td><?php echo $row['trim_pkg']; ?></td>
+                  <td><?php echo $row['headlamp']; ?></td>
+                  <td><?php echo $row['plow_model']; ?></td>
+                  <td><?php echo $row['subframe']; ?></td>
+                  <td><?php echo $row['mount_kit']; ?></td>
+                  <td><?php echo $row['center_member']; ?></td>
+                  <td><?php echo $row['note_1']; ?></td>
+                  <?php /*
+                  <td><?php echo $row['note 2']; ?></td>
+                  <td><?php echo $row['note 3']; ?></td>
+                  <td><?php echo $row['note 4']; ?></td>
+                  <td><?php echo $row['note 5']; ?></td>
+                  <td><?php echo $row['note 6']; ?></td>
+                  <td><?php echo $row['note 7']; ?></td>
+                  <td><?php echo $row['note 8']; ?></td>
+                  <td><?php echo $row['note 9']; ?></td>
+                  <td><?php echo $row['note 10']; ?></td>
+                  */ ?>
+
                 </tr>
             <?php }
               } else { ?>
@@ -109,11 +152,11 @@ if(!empty($_GET['status'])){
     $('#exportData').click(function(){
       $.ajax({
         method: 'post',
-        url: 'exportData.php',
-        data: {
-          'myString': scriptString,
-          'ajax': true
-        },
+        url: 'db/exportData.php',
+        // data: {
+        //   'myString': scriptString,
+        //   'ajax': true
+        // },
         success: function(data) {
           $('#data').text(data);
           console.log('CSV exported!')
